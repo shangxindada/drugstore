@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.shangxin.dao.WarehousingInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.shangxin.bean.WarehousingInfo" >
+    <id column="warehousingid" property="warehousingid" jdbcType="INTEGER" />
+    <result column="drugNumber" property="drugnumber" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="REAL" />
+    <result column="stock" property="stock" jdbcType="INTEGER" />
+    <result column="remakes" property="remakes" jdbcType="VARCHAR" />
+    <result column="mark" property="mark" jdbcType="BIT" />
+    <result column="date" property="date" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    warehousingid, drugNumber, price, stock, remakes, mark, date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_warehousing
+    where warehousingid = #{warehousingid,jdbcType=INTEGER}
+  </select>
+  <select id="selectWarehousingInfo" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List" />
+  	from tb_warehousing order by mark,date desc
+  </select>
+  <select id="selectByDate" resultType="java.lang.String">
+  	select distinct 
+  	drugNumber
+  	from tb_warehousing 
+  	where mark=0 and DATE_FORMAT(date,'%Y-%m-%d') between #{startDate,jdbcType=DATE} and #{endDate,jdbcType=DATE} 
+  </select>
+  <select id="selectStock" resultType="java.lang.Integer" >
+  	select sum(stock)
+  	from tb_warehousing 
+  	where drugNumber=#{drugNumber,jdbcType=VARCHAR} and mark=0 and DATE_FORMAT(date,'%Y-%m-%d') between #{startDate,jdbcType=DATE} and #{endDate,jdbcType=DATE}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_warehousing
+    where warehousingid = #{warehousingid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.shangxin.bean.WarehousingInfo" >
+    insert into tb_warehousing (warehousingid, drugNumber, price, 
+      stock, remakes, mark, date
+      )
+    values (#{warehousingid,jdbcType=INTEGER}, #{drugnumber,jdbcType=VARCHAR}, #{price,jdbcType=REAL}, 
+      #{stock,jdbcType=INTEGER}, #{remakes,jdbcType=VARCHAR}, #{mark,jdbcType=BIT}, #{date,jdbcType=DATE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.shangxin.bean.WarehousingInfo" >
+    insert into tb_warehousing
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="warehousingid != null" >
+        warehousingid,
+      </if>
+      <if test="drugnumber != null" >
+        drugNumber,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="stock != null" >
+        stock,
+      </if>
+      <if test="remakes != null" >
+        remakes,
+      </if>
+      <if test="mark != null" >
+        mark,
+      </if>
+      <if test="date != null" >
+        date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="warehousingid != null" >
+        #{warehousingid,jdbcType=INTEGER},
+      </if>
+      <if test="drugnumber != null" >
+        #{drugnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=REAL},
+      </if>
+      <if test="stock != null" >
+        #{stock,jdbcType=INTEGER},
+      </if>
+      <if test="remakes != null" >
+        #{remakes,jdbcType=VARCHAR},
+      </if>
+      <if test="mark != null" >
+        #{mark,jdbcType=BIT},
+      </if>
+      <if test="date != null" >
+        #{date,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shangxin.bean.WarehousingInfo" >
+    update tb_warehousing
+    <set >
+      <if test="drugnumber != null" >
+        drugNumber = #{drugnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=REAL},
+      </if>
+      <if test="stock != null" >
+        stock = #{stock,jdbcType=INTEGER},
+      </if>
+      <if test="remakes != null" >
+        remakes = #{remakes,jdbcType=VARCHAR},
+      </if>
+      <if test="mark != null" >
+        mark = #{mark,jdbcType=BIT},
+      </if>
+      <if test="date != null" >
+        date = #{date,jdbcType=DATE},
+      </if>
+    </set>
+    where warehousingid = #{warehousingid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shangxin.bean.WarehousingInfo" >
+    update tb_warehousing
+    set drugNumber = #{drugnumber,jdbcType=VARCHAR},
+      price = #{price,jdbcType=REAL},
+      stock = #{stock,jdbcType=INTEGER},
+      remakes = #{remakes,jdbcType=VARCHAR},
+      mark = #{mark,jdbcType=BIT},
+      date = #{date,jdbcType=DATE}
+    where warehousingid = #{warehousingid,jdbcType=INTEGER}
+  </update>
+</mapper>

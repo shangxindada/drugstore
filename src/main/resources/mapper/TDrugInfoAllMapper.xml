@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shangxin.dao.drugInfoAllDao">
+	<resultMap type="com.shangxin.bean.DrugInfoAll" id="DrugInfoAll">
+		<id column="drugNumber" property="drugNumber" />
+		<result column="drugName" property="drugName"/>
+		<result column="productDate" property="productDate"/>
+		<result column="safeDate" property="safeDate"/>
+		<result column="supplierId" property="supplierId"/>
+		<result column="supplierName" property="supplierName"/>
+		<result column="price" property="price"/>
+		<result column="purchasePrice" property="purchasePrice"/>
+		<result column="stock" property="stock"/>
+		<result column="remakes" property="remakes"/>
+		<association property="type" javaType="com.shangxin.bean.DrugType">
+			<id property="typeId" column="typeId"/>
+			<result property="type" column="type"/>
+		</association>
+	</resultMap>
+	
+	<select id="selectDrugInfoAll" resultMap="DrugInfoAll">
+		select d.drugNumber,d.drugName,d.productDate,d.safeDate,d.supplierId,d.price,d.purchasePrice,d.stock,d.typeId,d.remakes,dt.type,si.supplierName  from tb_druginfo d left join tb_drugtype dt  on d.typeId=dt.typeId 
+			left join tb_supplierinfo si on d.supplierId=si.supplierId 
+	</select>
+	<select id="selectById" resultMap="DrugInfoAll" parameterType="java.lang.String">
+		select d.drugNumber,d.drugName,d.productDate,d.safeDate,d.supplierId,d.price,d.purchasePrice,d.stock,d.typeId,d.remakes,dt.type,si.supplierName  from tb_druginfo d left join tb_drugtype dt  on d.typeId=dt.typeId 
+			left join tb_supplierinfo si on d.supplierId=si.supplierId where d.drugNumber=#{drugNumber,jdbcType=VARCHAR}
+	</select>
+	<select id="selectByName" resultMap="DrugInfoAll" parameterType="java.lang.String">
+		select d.drugNumber,d.drugName,d.productDate,d.safeDate,d.supplierId,d.price,d.purchasePrice,d.stock,d.typeId,d.remakes,dt.type,si.supplierName  from tb_druginfo d left join tb_drugtype dt  on d.typeId=dt.typeId 
+			left join tb_supplierinfo si on d.supplierId=si.supplierId where d.drugName=#{drugName,jdbcType=VARCHAR}
+	</select>
+	<select id="selectByType" resultMap="DrugInfoAll" parameterType="java.lang.String">
+		select d.drugNumber,d.drugName,d.productDate,d.safeDate,d.supplierId,d.price,d.purchasePrice,d.stock,d.typeId,d.remakes,dt.type,si.supplierName  from tb_druginfo d left join tb_drugtype dt  on d.typeId=dt.typeId 
+			left join tb_supplierinfo si on d.supplierId=si.supplierId where dt.type=#{type,jdbcType=VARCHAR}
+	</select>
+</mapper>

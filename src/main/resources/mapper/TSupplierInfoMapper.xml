@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper  namespace="com.shangxin.dao.supplierInfoDao">
+	<resultMap type="com.shangxin.bean.SupplierInfo" id="SupplierInfo">
+		<id column="supplierId" property="supplierId"/>
+		<result column="supplierName" property="supplierName"/>
+		<result column="contacts" property="contacts"/>
+		<result column="supplierAddress" property="supplierAddress"/>
+		<result column="contactsPhone" property="contactsPhone" />
+		<result column="licenseId" property="licenseId"/>
+		<result column="busLicenseId" property="busLicenseId"/>
+	</resultMap>
+	<select id="selectAllSupplierInfo" resultMap="SupplierInfo">
+		select * from tb_supplierinfo
+	</select>
+	<select id="selectSupplierName" resultType="java.lang.String">
+		select supplierName from tb_supplierinfo
+		where supplierId=#{supplierId}
+	</select>
+	<select id="selectSupplierBySupplierId" resultMap="SupplierInfo">
+		select * from tb_supplierinfo
+		where supplierId=#{suplierId,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteSupplierBySupplierId" parameterType="java.lang.String">
+		delete from tb_supplierinfo
+    	where supplierId = #{supplierId,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insertSupplier" parameterType="SupplierInfo" >
+    insert into tb_supplierinfo (supplierId, supplierName, contacts, 
+      supplierAddress, contactsPhone,licenseId,busLicenseId)
+    values (#{supplierId,jdbcType=VARCHAR}, #{supplierName,jdbcType=VARCHAR}, #{contacts,jdbcType=VARCHAR}, 
+      #{supplierAddress,jdbcType=VARCHAR}, #{contactsPhone,jdbcType=VARCHAR},#{licenseId,jdbcType=VARCHAR},
+      #{busLicenseId,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateSupplierBySupplierId" parameterType="SupplierInfo" >
+    update tb_supplierinfo
+    set supplierName = #{supplierName,jdbcType=VARCHAR},
+      contacts = #{contacts,jdbcType=VARCHAR},
+      supplierAddress = #{supplierAddress,jdbcType=VARCHAR},
+      contactsPhone = #{contactsPhone,jdbcType=VARCHAR},
+      licenseId = #{licenseId,jdbcType=VARCHAR},
+      busLicenseId = #{busLicenseId,jdbcType=VARCHAR}
+    where supplierId = #{supplierId,jdbcType=VARCHAR}
+  </update>
+</mapper>

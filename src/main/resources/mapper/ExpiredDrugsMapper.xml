@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.shangxin.dao.ExpiredDrugsMapper" >
+  <resultMap id="BaseResultMap" type="com.shangxin.bean.ExpiredDrugs" >
+    <id column="expNumber" property="expnumber" jdbcType="INTEGER" />
+    <result column="drugNumber" property="drugnumber" jdbcType="VARCHAR" />
+    <result column="expDrugName" property="expdrugname" jdbcType="VARCHAR" />
+    <result column="expDate" property="expdate" jdbcType="DATE" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="expNum" property="expnum" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    expNumber, drugNumber, expDrugName, expDate, type, expNum
+  </sql>
+  <select id="selectAll" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List" />
+  	from tb_expireddrugs
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_expireddrugs
+    where expNumber = #{expnumber,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_expireddrugs
+    where expNumber = #{expnumber,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.shangxin.bean.ExpiredDrugs" >
+    insert into tb_expireddrugs (expNumber, drugNumber, expDrugName, 
+      expDate, type, expNum)
+    values (#{expnumber,jdbcType=INTEGER}, #{drugnumber,jdbcType=VARCHAR}, #{expdrugname,jdbcType=VARCHAR}, 
+      #{expdate,jdbcType=DATE}, #{type,jdbcType=VARCHAR}, #{expnum,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.shangxin.bean.ExpiredDrugs" >
+    insert into tb_expireddrugs
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="expnumber != null" >
+        expNumber,
+      </if>
+      <if test="drugnumber != null" >
+        drugNumber,
+      </if>
+      <if test="expdrugname != null" >
+        expDrugName,
+      </if>
+      <if test="expdate != null" >
+        expDate,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="expnum != null" >
+        expNum,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="expnumber != null" >
+        #{expnumber,jdbcType=INTEGER},
+      </if>
+      <if test="drugnumber != null" >
+        #{drugnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="expdrugname != null" >
+        #{expdrugname,jdbcType=VARCHAR},
+      </if>
+      <if test="expdate != null" >
+        #{expdate,jdbcType=DATE},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="expnum != null" >
+        #{expnum,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shangxin.bean.ExpiredDrugs" >
+    update tb_expireddrugs
+    <set >
+      <if test="drugnumber != null" >
+        drugNumber = #{drugnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="expdrugname != null" >
+        expDrugName = #{expdrugname,jdbcType=VARCHAR},
+      </if>
+      <if test="expdate != null" >
+        expDate = #{expdate,jdbcType=DATE},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="expnum != null" >
+        expNum = #{expnum,jdbcType=INTEGER},
+      </if>
+    </set>
+    where expNumber = #{expnumber,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shangxin.bean.ExpiredDrugs" >
+    update tb_expireddrugs
+    set drugNumber = #{drugnumber,jdbcType=VARCHAR},
+      expDrugName = #{expdrugname,jdbcType=VARCHAR},
+      expDate = #{expdate,jdbcType=DATE},
+      type = #{type,jdbcType=VARCHAR},
+      expNum = #{expnum,jdbcType=INTEGER}
+    where expNumber = #{expnumber,jdbcType=INTEGER}
+  </update>
+</mapper>

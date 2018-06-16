@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shangxin.dao.proofDao">
+	<resultMap type="com.shangxin.bean.Proof" id="Proof">
+		<id column="proofId" property="proofId"/>
+		<result column="proof" property="proofe"/>
+		<result column="ifUse" property="isUse"/>
+		<result column="proofData" property="proofDate"/>
+		<result column="proofLeve" property="proofLe"/>
+	</resultMap>
+	
+	<select id="selectByProof" resultMap="Proof">
+  	select * from tb_proof
+  	where proof=#{proofe} and ifUse=1
+  	</select>
+  	<select id="selectAllproof" resultMap="Proof">
+  	select * from tb_proof 
+  	</select>
+  	<update id="updateIfUse">
+  	update tb_proof
+  	set ifUse = 0
+  	where proofId=#{proofId}
+  	</update>
+  	<insert id="insertProof" parameterType="com.shangxin.bean.Proof">
+  		insert into tb_proof(proofId,proof,ifUse,proofData,proofLeve)
+  		value ( #{proofId,jdbcType=INTEGER},
+  				#{proofe,jdbcType=VARCHAR},
+  				#{isUse},
+  				#{proofDate,jdbcType=DATE},
+  				#{proofLe,jdbcType=INTEGER}
+  		) 
+  	</insert>
+  	<delete id="deleteProof" parameterType="java.lang.Integer">
+		delete from tb_proof
+		where proofId=#{proofId,jdbcType=INTEGER} 
+  	</delete>
+	
+</mapper>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shangxin.dao.drugInfoDao">
+	<resultMap type="com.shangxin.bean.DrugInfo" id="DrugInfo">
+		<id column="drugNumber" property="drugNumber"/>
+		<result column="drugName" property="drugName"/>
+		<result column="productDate" property="productDate"/>
+		<result column="safeDate" property="safeDate" />
+		<result column="supplierId" property="supplierId"/>
+		<result column="price" property="price" />
+		<result column="purchasePrice" property="purchasePrice"/>
+		<result column="stock" property="stock"/>
+		<result column="typeId" property="typeId"/>
+		<result column="remakes" property="remakes"/>
+	</resultMap>
+	
+	<select id="selectAllDrugInfo" resultMap="DrugInfo">
+		select * from tb_druginfo
+	</select>
+	<select id="selectByDrugNumber" resultMap="DrugInfo" >
+		select * from tb_druginfo where drugNumber=#{drugNumber}
+	</select>
+	<select id="selectDrugInfoCount" resultType="java.lang.Integer">
+		select count(*) from tb_druginfo
+	</select>
+	<select id="selectSameDrugInfo" resultMap="DrugInfo">
+		select * from tb_drugInfo limit #{start},#{size}
+	</select>
+	<select id="selectInSell" resultType="java.lang.String">
+		select drugNumber from tb_drugInfo where drugNumber =
+		(select  drugNumber
+  	 from tb_sellinfo s left join tb_othersellinfo o on s.sellId=o.sellId
+  	 where DATE_FORMAT(o.sellDate,'%Y-%m-%d') between #{startDate,jdbcType=DATE} and #{endDate,jdbcType=DATE})
+	</select>
+	<update id="updateByDrugNumber">
+		update tb_druginfo
+		set drugName=#{drugName,jdbcType=VARCHAR},
+			productDate=#{productDate,jdbcType=DATE},
+			safeDate=#{safeDate,jdbcType=VARCHAR},
+			supplierId=#{supplierId,jdbcType=VARCHAR},
+			price=#{price,jdbcType=FLOAT},
+			purchasePrice=#{purchasePrice,jdbcType=FLOAT},
+			stock=#{stock,jdbcType=INTEGER},
+			typeId=#{typeId,jdbcType=INTEGER},
+			remakes=#{remakes,jdbcType=VARCHAR}
+		where drugNumber=#{drugNumber}
+	</update>
+	<update id="updateStockByDrugNumber">
+		update tb_druginfo
+		set stock=#{stock,jdbcType=INTEGER}
+		where drugNumber=#{drugNumber}
+	</update>
+	<insert id="insertDrugInfo">
+		insert into tb_druginfo(drugNumber,drugName,productDate,safeDate,supplierId,price,purchasePrice,
+			stock,typeId,remakes)
+		value(#{drugNumber,jdbcType=VARCHAR},
+			#{drugName,jdbcType=VARCHAR},
+			#{productDate,jdbcType=DATE},
+			#{safeDate,jdbcType=VARCHAR},
+			#{supplierId,jdbcType=VARCHAR},
+			#{price,jdbcType=FLOAT},
+			#{purchasePrice,jdbcType=FLOAT},
+			#{stock,jdbcType=INTEGER},
+			#{typeId,jdbcType=INTEGER},
+			#{remakes,jdbcType=VARCHAR})
+	</insert>
+	<delete id="deleteDrugInfoByDrugNumber">
+		delete from tb_drugifo
+		where drugNumber=#{drugNumber,jdbcType=VARCHAR}
+	</delete>
+	
+	
+</mapper>

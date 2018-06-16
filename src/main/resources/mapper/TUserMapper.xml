@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shangxin.dao.userDao">
+  <resultMap id="User" type="com.shangxin.bean.User">
+    <id column="userId" property="userId" />
+    <result column="passWord" property="userPsd" />
+    <result column="userLeve" property="userLe" />
+  </resultMap>
+  
+  <select id="selectAllUser" resultMap="User">
+  	select * from tb_user where userLeve=0
+  </select> 
+  <select id="selectById" resultMap="User">
+  	select * from tb_user
+  	where userId=#{userId}
+  </select>
+  <insert id="create">
+  	insert into tb_user(userId,passWord,userLeve)
+  	values(#{userId,jdbcType=VARCHAR},#{userPsd,jdbcType=VARCHAR},#{userLe,jdbcType=INTEGER})
+  </insert>
+  <delete id="deleteUserById" parameterType="java.lang.String">
+  	delete from tb_user where userId =#{userId,jdbcType=VARCHAR}
+  </delete>
+  <!-- <select id="selectCount" resultType="java.lang.Integer">
+  	select count(*) from supplier
+  </select>
+  <insert id="create">
+  	insert into supplier(gysbh,gysmc,fddbr,ywlxr,lxfs,yyzzbh,swdjbh) 
+  	values(#{gysId,jdbcType=BIGINT},#{gysName,jdbcType=VARCHAR},#{farenName,jdbcType=VARCHAR},
+  	#{ywlxrName,jdbcType=VARCHAR},#{content,jdbcType=VARCHAR},#{yyzzId,jdbcType=VARCHAR},
+  	#{swdjId,jdbcType=VARCHAR})
+  </insert>
+  <delete id="deleteGys" parameterType="long">
+  	delete from supplier
+    where gysbh = #{gysId}
+  </delete>
+  <update id="updateSupplier">
+  	update supplier 
+  	set gysmc=#{gysName},
+  		fddbr=#{farenName},
+  		ywlxr=#{ywlxrName},
+  		lxfs=#{content},
+  		yyzzbh=#{yyzzId},
+  		swdjbh=#{swdjId}
+  	where gysbh=#{gysId}  
+  </update> -->
+</mapper>

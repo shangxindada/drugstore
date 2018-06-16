@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.shangxin.dao.OtherSellInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.shangxin.bean.OtherSellInfo" >
+    <id column="sellId" property="sellid" jdbcType="VARCHAR" />
+    <result column="userId" property="userid" jdbcType="VARCHAR" />
+    <result column="allPrice" property="allprice" jdbcType="REAL" />
+    <result column="sellData" property="selldata" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    sellId, userId, allPrice, sellData
+  </sql>
+  <select id="selectOtherSellInfo" resultMap="BaseResultMap"  >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_othersellinfo
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_othersellinfo
+    where sellId = #{sellid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tb_othersellinfo
+    where sellId = #{sellid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.shangxin.bean.OtherSellInfo" >
+    insert into tb_othersellinfo (sellId, userId, allPrice, 
+      sellData)
+    values (#{sellid,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR}, #{allprice,jdbcType=REAL}, 
+      #{selldata,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.shangxin.bean.OtherSellInfo" >
+    insert into tb_othersellinfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sellid != null" >
+        sellId,
+      </if>
+      <if test="userid != null" >
+        userId,
+      </if>
+      <if test="allprice != null" >
+        allPrice,
+      </if>
+      <if test="selldata != null" >
+        sellData,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sellid != null" >
+        #{sellid,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="allprice != null" >
+        #{allprice,jdbcType=REAL},
+      </if>
+      <if test="selldata != null" >
+        #{selldata,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shangxin.bean.OtherSellInfo" >
+    update tb_othersellinfo
+    <set >
+      <if test="userid != null" >
+        userId = #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="allprice != null" >
+        allPrice = #{allprice,jdbcType=REAL},
+      </if>
+      <if test="selldata != null" >
+        sellData = #{selldata,jdbcType=DATE},
+      </if>
+    </set>
+    where sellId = #{sellid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shangxin.bean.OtherSellInfo" >
+    update tb_othersellinfo
+    set userId = #{userid,jdbcType=VARCHAR},
+      allPrice = #{allprice,jdbcType=REAL},
+      sellData = #{selldata,jdbcType=DATE}
+    where sellId = #{sellid,jdbcType=VARCHAR}
+  </update>
+</mapper>

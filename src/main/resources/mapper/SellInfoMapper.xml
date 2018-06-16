@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.shangxin.dao.SellInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.shangxin.bean.SellInfo" >
+    <id column="sellNumber" property="sellnumber" jdbcType="VARCHAR" />
+    <result column="sellId" property="sellid" jdbcType="VARCHAR" />
+    <result column="drugNumber" property="drugnumber" jdbcType="VARCHAR" />
+    <result column="sellPrice" property="sellprice" jdbcType="REAL" />
+    <result column="sellNum" property="sellnum" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    sellNumber, sellId, drugNumber, sellPrice, sellNum
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_sellinfo
+    where sellNumber = #{sellnumber,jdbcType=VARCHAR}
+  </select>
+  <select id="selectBySellId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_sellinfo
+    where sellId = #{sellId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAllPrice" resultType="java.lang.Float">
+  	select sum(sellPrice) from tb_sellinfo where sellId = #{sellId,jdbcType=VARCHAR} 
+  </select>
+  <select id="selectByDate" resultType="java.lang.String">
+  	select  distinct 
+  	 drugNumber
+  	 from tb_sellinfo s left join tb_othersellinfo o on s.sellId=o.sellId
+  	 where DATE_FORMAT(o.sellData,'%Y-%m-%d') between #{startDate,jdbcType=DATE} and #{endDate,jdbcType=DATE}
+  </select>
+  <select id="selectStock" resultType="java.lang.Integer" >
+  	select sum(sellNum)
+  	from tb_sellinfo s left join tb_othersellinfo o on s.sellId=o.sellId
+  	where drugNumber=#{drugNumber,jdbcType=VARCHAR} and DATE_FORMAT(o.sellData,'%Y-%m-%d') between #{startDate,jdbcType=DATE} and #{endDate,jdbcType=DATE}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tb_sellinfo
+    where sellNumber = #{sellnumber,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteBySellId" parameterType="java.lang.String" >
+    delete from tb_sellinfo
+    where sellId = #{sellId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.shangxin.bean.SellInfo" >
+    insert into tb_sellinfo (sellNumber, sellId, drugNumber, 
+      sellPrice, sellNum)
+    values (#{sellnumber,jdbcType=VARCHAR}, #{sellid,jdbcType=VARCHAR}, #{drugnumber,jdbcType=VARCHAR}, 
+      #{sellprice,jdbcType=REAL}, #{sellnum,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.shangxin.bean.SellInfo" >
+    insert into tb_sellinfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sellnumber != null" >
+        sellNumber,
+      </if>
+      <if test="sellid != null" >
+        sellId,
+      </if>
+      <if test="drugnumber != null" >
+        drugNumber,
+      </if>
+      <if test="sellprice != null" >
+        sellPrice,
+      </if>
+      <if test="sellnum != null" >
+        sellNum,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sellnumber != null" >
+        #{sellnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="sellid != null" >
+        #{sellid,jdbcType=VARCHAR},
+      </if>
+      <if test="drugnumber != null" >
+        #{drugnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="sellprice != null" >
+        #{sellprice,jdbcType=REAL},
+      </if>
+      <if test="sellnum != null" >
+        #{sellnum,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shangxin.bean.SellInfo" >
+    update tb_sellinfo
+    <set >
+      <if test="sellid != null" >
+        sellId = #{sellid,jdbcType=VARCHAR},
+      </if>
+      <if test="drugnumber != null" >
+        drugNumber = #{drugnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="sellprice != null" >
+        sellPrice = #{sellprice,jdbcType=REAL},
+      </if>
+      <if test="sellnum != null" >
+        sellNum = #{sellnum,jdbcType=INTEGER},
+      </if>
+    </set>
+    where sellNumber = #{sellnumber,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shangxin.bean.SellInfo" >
+    update tb_sellinfo
+    set sellId = #{sellid,jdbcType=VARCHAR},
+      drugNumber = #{drugnumber,jdbcType=VARCHAR},
+      sellPrice = #{sellprice,jdbcType=REAL},
+      sellNum = #{sellnum,jdbcType=INTEGER}
+    where sellNumber = #{sellnumber,jdbcType=VARCHAR}
+  </update>
+</mapper>

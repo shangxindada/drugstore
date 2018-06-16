@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shangxin.dao.drugTypeDao">
+	<resultMap id="DrugType" type="com.shangxin.bean.DrugType">
+		<id column="typeId" property="typeId"/>
+		<result column="type" property="type"/>
+	</resultMap>
+	<select id="selectAllDrugType" resultMap="DrugType">
+		select * from tb_drugtype
+	</select>
+	<insert id="insertDrugType" >
+		insert into tb_drugtype(type)
+		value(#{type,jdbcType=VARCHAR})
+	</insert>
+	<select id="selectByDrugTypeId" resultMap="DrugType">
+		select * from tb_drugtype
+		where typeId=#{typeId}
+	</select>
+	<delete id="deleteByDrugTypeId">
+		delete from tb_drugtype
+		where typeId=#{typeId}
+	</delete>
+	<update id="updateByDrugTypeId" >
+		update tb_drugtype
+		set type=#{type,jdbcType=VARCHAR}
+		where typeId=#{typeId}
+	</update>
+</mapper>

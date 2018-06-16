@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shangxin.dao.userInfoDao">
+	<resultMap type="com.shangxin.bean.UserInfo" id="UserInfo">
+		<id column="userNumber" property="userNumber"/>
+		<result column="userName" property="userName"/>
+		<result column="sex" property="sex"/>
+		<result column="age" property="age"/>
+		<result column="telePhone" property="userPhone"/>
+		<result column="address" property="useraddress"/>
+		<result column="salary" property="salary"/>
+		<result column="position" property="userPostion"/> 
+		<result column="userId" property="userId"/>
+	</resultMap>
+	
+	<select id="selectAllUserInfo" resultMap="UserInfo">
+		select * from tb_userinfo
+	</select>
+	<select id="selectByUserId" resultMap="UserInfo">
+		select * from tb_userinfo where userId=#{userId}
+	</select>
+	<insert id="insertUserInfo">
+		insert into tb_userinfo(userId)
+		value(#{userId,jdbcType=VARCHAR}) 
+	</insert>
+	<update id="updateUserInfo"> <!-- parameterType="com.shangxin.bean.UserInfo" -->
+		update tb_userinfo
+		set userName=#{userName,jdbcType=VARCHAR},
+			sex=#{sex,jdbcType=VARCHAR},
+			age=#{age,jdbcType=INTEGER},
+			telePhone=#{userPhone,jdbcType=VARCHAR},
+			address=#{useraddress,jdbcType=VARCHAR},
+			salary=#{salary,jdbcType=FLOAT},
+			position=#{userPostion,jdbcType=VARCHAR}
+		where userNumber=#{userNumber}
+	</update>
+	
+</mapper>

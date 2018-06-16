@@ -1,0 +1,90 @@
+/*设置整个html的外边距和内边距为0*/
+*{
+	padding:0;
+	margin:0;
+}
+body{
+	background-color:rgb(238,238,238);
+}
+a{
+	text-decoration: none;
+}
+ul{
+	list-style-type:none;
+}
+/*
+ * 这部分是login.html的一些公共样式
+ */
+.main-login{
+	text-align: center;
+	width:300px;
+	margin:0 auto;
+	border:1px solid #E0E0E0;
+	margin-bottom: 20px;
+}
+
+
+.main-login input{
+	width:200px;
+	height:40px;
+	line-height: 40px;
+	border:hidden;
+	text-indent: 1em;
+}
+
+.main-font{
+	font-size:18px;
+	color:rgb(118,118,118);
+}
+
+/*
+ * 这是top.jsp的一些公共样式
+ */
+.main-header{
+	width:1070px;
+	background-color:#417DC9;
+	overflow:hidden;
+}
+.main-p{
+	color:rgb(255,255,255);
+}
+.main-top{
+	width:350px;
+	height:78px;
+	float:left;
+	text-align: center;
+	line-height:78px;
+}
+
+.main-font2{
+	font-size:18px;
+	color:rgb(255,255,255);
+}
+/* 这是sidebar的一些样式 */ 
+.main-sidebar{
+	width:150px;
+	margin-top: 10px;
+	background-color:rgb(238,238,238);
+}
+.main-sidebar ul{
+	width:150px;
+	text-align: center;
+}
+.main-sidebar ul li{
+	background-color:#417DC9;
+}
+.main-sidebar ul li a{
+	display:block;
+}
+.main-sidebar ul li a:link{
+	color:rgb(255,255,255);
+}
+.main-sidebar ul li a:visited{
+	color:rgb(255,255,255);
+}
+.main-sidebar ul li a:hover{
+	
+}
+.main-sidevar ul li a:action{
+	
+}
